@@ -46,7 +46,7 @@ StrangeRules/Binaries/*
 StrangeRules/Plugins/*/Binaries/*
 
 # Ignore content except gameModes and localization
-StrangeRules/Content/*
+StrangeRules/Content/*/
 !StrangeRules/Content/GameModes
 !StrangeRules/Content/Localization
 
@@ -73,3 +73,8 @@ StrangeRules/Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 StrangeRules/DerivedDataCache/*
+Content/3DCars_Truck1/
+
+Content/Complete_Horror/
+
+Content/MAEOakForest/
