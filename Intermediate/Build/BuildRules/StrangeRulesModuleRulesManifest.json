@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"C:\\Repos\\StrangeRulesDemo\\StrangeRules\\Source\\StrangeRules\\StrangeRules.Build.cs",
+		"C:\\Repos\\StrangeRulesDemo\\StrangeRules\\Source\\StrangeRules.Target.cs",
+		"C:\\Repos\\StrangeRulesDemo\\StrangeRules\\Source\\StrangeRulesEditor.Target.cs"
+	],
+	"EngineVersion": "5.3.2"
+}

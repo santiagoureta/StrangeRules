@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "StrangeRules",
+			"Path": "..\\Source\\StrangeRules.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "StrangeRulesEditor",
+			"Path": "..\\Source\\StrangeRulesEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
