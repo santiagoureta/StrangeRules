@@ -45,6 +45,11 @@
 StrangeRules/Binaries/*
 StrangeRules/Plugins/*/Binaries/*
 
+# Ignore content except gameModes and localization
+StrangeRules/Content/*
+!StrangeRules/Content/GameModes
+!StrangeRules/Content/Localization
+
 # Builds
 StrangeRules/Build/*
 
