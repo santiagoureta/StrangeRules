@@ -3,6 +3,10 @@
 
 #include "EventActor.h"
 #include "Engine/World.h"
+#include "PlayerCharacter.h"
+#include "Containers/Map.h"
+#include "Components/BoxComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AEventActor::AEventActor()
@@ -19,68 +23,35 @@ bool AEventActor::GenerateInitialLevel()
         UE_LOG(LogTemp, Warning, TEXT("Level generation is starting"));
         SetEventLevelState(EventLevelState::LOADING_LEVEL);
 
-        // lambda thats fills the information for the chunks for the event
-        auto FillChunkInfo = [](LevelChunkType type, float x, float y, float z)
-        {
-            ChunkObject chunkObject;
-            chunkObject.chunkType = type;
-            chunkObject.position_X = x;
-            chunkObject.position_Y = y;
-            chunkObject.position_Z = z;
-            return chunkObject;
-        };
-
         // for the middle section always used the current location
         FVector3d currentPosition = GetActorLocation();
 
         // create a default path for when we are loading the level
-        LevelChunkType chunkType = BlueprintClass.GetDefaultObject()->GetLevelChunkType();
         for (int8 i = static_cast<int8>(LevelChunkPosition::FRONT_START_POSITION); i <= static_cast<int8>(LevelChunkPosition::FRONT_END_POSITION); i++)
         {
-            ChunkObject chunkObject;
-            AActor* SpawnedActor;
-            switch (i)
+            LevelChunkPosition chunkPosition = static_cast<LevelChunkPosition>(i);
+
+            if (LevelChunkPosition::FRONT_POSITION == chunkPosition)
             {
-                case static_cast<int8>(LevelChunkPosition::FRONT_POSITION):
-                {
-                    chunkObject = FillChunkInfo(chunkType, 1000, 0.0, 0.0);
-
-                    // Spawn the Blueprint instance
-                    FVector location = FVector(chunkObject.position_X, chunkObject.position_Y, chunkObject.position_Z);
-                    SpawnedActor = GetWorld()->SpawnActor<AActor>(BlueprintClass, location, FRotator(0.0, 0.0, 0.0));
-                    break;
-                }
-
-                case static_cast<int8>(LevelChunkPosition::MIDDLE_POSITION):
-                {
-                    chunkObject = FillChunkInfo(chunkType, currentPosition.X, currentPosition.Y, currentPosition.Z);
-                    // Spawn the Blueprint instance
-                    FVector location = FVector(chunkObject.position_X, chunkObject.position_Y, chunkObject.position_Z);
-                    SpawnedActor = GetWorld()->SpawnActor<AActor>(BlueprintClass, location, FRotator(0.0, 0.0, 0.0));
-                    break;
-                }
-
-                case static_cast<int8>(LevelChunkPosition::BACK_POSITION):
-                {
-                    chunkObject = FillChunkInfo(chunkType, -1000, 0.0, 0.0);
-                    // Spawn the Blueprint instance
-                    FVector location = FVector(chunkObject.position_X, chunkObject.position_Y, chunkObject.position_Z);
-                    SpawnedActor = GetWorld()->SpawnActor<AActor>(BlueprintClass, location, FRotator(0.0, 0.0, 0.0));
-                    break;
-                }
+                // Spawn the Blueprint instance
+                ALevelChunk* frontChunk = GetWorld()->SpawnActor<ALevelChunk>(BlueprintClass, FVector(1000, 0.0, 0.0), FRotator(0.0, 0.0, 0.0));
+                mLevelStructMap.Add(chunkPosition, frontChunk);
             }
-
-            if (SpawnedActor)
+            else if (LevelChunkPosition::MIDDLE_POSITION == chunkPosition)
             {
-                mLevelStructMap.Add(static_cast<LevelChunkPosition>(i), SpawnedActor);
-                isSuccess = true;
+                // Spawn the Blueprint instance
+                ALevelChunk* middleChunk = GetWorld()->SpawnActor<ALevelChunk>(BlueprintClass, FVector(currentPosition.X, currentPosition.Y, currentPosition.Z), FRotator(0.0, 0.0, 0.0));
+                mLevelStructMap.Add(chunkPosition, middleChunk);
             }
             else
             {
-                isSuccess = false;
-                break;
+                // Spawn the Blueprint instance
+                ALevelChunk* backChunk = GetWorld()->SpawnActor<ALevelChunk>(BlueprintClass, FVector(-1000, 0.0, 0.0), FRotator(0.0, 0.0, 0.0));
+                mLevelStructMap.Add(chunkPosition, backChunk);
             }
         }
+
+        isSuccess = !mLevelStructMap.IsEmpty();
 
         // if it goes well we just change the state
         if (isSuccess)
@@ -100,19 +71,34 @@ bool AEventActor::GenerateInitialLevel()
 }
 
 // Called each tick to know if we need to load a new level infront and delete the back one
-bool AEventActor::GenerateDrivingLevel()
+void AEventActor::GenerateDrivingLevel()
 {
-    bool isSuccess = false;
-    
-    //ALevelChunk* frontChunk = static_cast<ALevelChunk*>(mLevelStructMap.Find(LevelChunkPosition::FRONT_POSITION));
-    return isSuccess;
+    ALevelChunk* frontChunk = *mLevelStructMap.Find(LevelChunkPosition::FRONT_POSITION);
+    // its means the player in on the front and we are going to generate a new chunk
+    if (frontChunk->GetIsPlayerOn())
+    {
+        FVector frontChunkLocation = frontChunk->GetActorLocation();
+
+        // Spawn the Blueprint instance
+        ALevelChunk* newFrontChunk = GetWorld()->SpawnActor<ALevelChunk>(BlueprintClass, FVector(frontChunkLocation.X += 1000, frontChunkLocation.Y, frontChunkLocation.Z), FRotator(0.0, 0.0, 0.0));
+        ALevelChunk* middleChunk = *mLevelStructMap.Find(LevelChunkPosition::MIDDLE_POSITION);
+
+        // destroy actor
+        ALevelChunk* backChunk = *mLevelStructMap.Find(LevelChunkPosition::BACK_POSITION);
+        backChunk->Destroy();
+        mLevelStructMap.FindAndRemoveChecked(LevelChunkPosition::BACK_POSITION);
+        mLevelStructMap.Add(LevelChunkPosition::BACK_POSITION, middleChunk);
+        mLevelStructMap.FindAndRemoveChecked(LevelChunkPosition::MIDDLE_POSITION);
+        mLevelStructMap.Add(LevelChunkPosition::MIDDLE_POSITION, frontChunk);
+        mLevelStructMap.FindAndRemoveChecked(LevelChunkPosition::FRONT_POSITION);
+        mLevelStructMap.Add(LevelChunkPosition::FRONT_POSITION, newFrontChunk);
+    }
 }
 
 // Called when the game starts or when spawned
 void AEventActor::BeginPlay()
 {
     Super::BeginPlay();
-    
 }
 
 // Called every frame

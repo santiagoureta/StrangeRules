@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Containers/Map.h"
 #include "LevelChunk.h"
 #include "EventActor.generated.h"
 
@@ -54,7 +53,7 @@ public:
     bool GenerateInitialLevel();
 
     UFUNCTION(BlueprintCallable, Category = "LevelGeneration")
-    bool GenerateDrivingLevel();
+    void GenerateDrivingLevel();
 
 protected:
 
@@ -68,5 +67,5 @@ private:
     UPROPERTY(EditAnywhere, Category = "Setup")
     TSubclassOf<ALevelChunk> BlueprintClass;
 
-    TMap<LevelChunkPosition, AActor*> mLevelStructMap;
+    TMap<LevelChunkPosition, ALevelChunk*> mLevelStructMap;
 };

@@ -13,6 +13,7 @@
     </None>
     <None Include="..\..\.gitattributes" />
     <None Include="..\..\.gitignore" />
+    <None Include="..\..\.vsconfig" />
     <None Include="..\..\README.md" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
@@ -71,16 +72,16 @@
     <ClInclude Include="..\..\Source\StrangeRules\EventActor.h">
       <Filter>Source\StrangeRules</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\StrangeRules\LevelActorSpawner.cpp">
-      <Filter>Source\StrangeRules</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\StrangeRules\LevelActorSpawner.h">
-      <Filter>Source\StrangeRules</Filter>
-    </ClInclude>
     <ClCompile Include="..\..\Source\StrangeRules\LevelChunk.cpp">
       <Filter>Source\StrangeRules</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\StrangeRules\LevelChunk.h">
+      <Filter>Source\StrangeRules</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\StrangeRules\PlayerCharacter.cpp">
+      <Filter>Source\StrangeRules</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\StrangeRules\PlayerCharacter.h">
       <Filter>Source\StrangeRules</Filter>
     </ClInclude>
     <None Include="..\..\Source\StrangeRules\StrangeRules.Build.cs">

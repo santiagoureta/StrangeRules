@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "LevelInstance/LevelInstanceActor.h"
+#include "PlayerCharacter.h"
 #include "LevelChunk.generated.h"
 
 UENUM()
@@ -29,8 +30,8 @@ enum class LevelChunkPosition : int8
 UCLASS()
 class STRANGERULES_API ALevelChunk : public ALevelInstance
 {
-	GENERATED_BODY()
-	
+    GENERATED_BODY()
+    
     public:
 
         // Sets default values for this actor's properties
@@ -40,14 +41,30 @@ class STRANGERULES_API ALevelChunk : public ALevelInstance
 
         LevelChunkPosition GetLevelPositionType() { return ChunkPositionType; };
 
+        bool GetIsPlayerOn() { return IsPlayerOn; };
+
     protected:
 
         UPROPERTY(EditAnywhere, Category = "Setup")
         class UBoxComponent* CollisionBox;
 
         UPROPERTY(EditAnywhere, Category = "Setup")
+        TSubclassOf<APlayerCharacter> PlayerClass;
+
+        UPROPERTY(EditAnywhere, Category = "Setup")
+        bool IsPlayerOn = false;
+
+        UPROPERTY(EditAnywhere, Category = "Setup")
         LevelChunkType ChunkType = LevelChunkType::INVALID_CHUNK_TYPE;
 
         UPROPERTY(EditAnywhere, Category = "Setup")
         LevelChunkPosition ChunkPositionType = LevelChunkPosition::INVALID_POSITION_TYPE;
+
+        UFUNCTION()
+        void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+        UFUNCTION()
+        void OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+        void SetIsPlayerOn(bool newValue) { IsPlayerOn = newValue; };
 };
