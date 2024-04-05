@@ -99,5 +99,17 @@
     <ClInclude Include="..\..\Source\StrangeRules\StrangeRulesGameModeBase.h">
       <Filter>Source\StrangeRules</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\StrangeRules\Truck.cpp">
+      <Filter>Source\StrangeRules</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\StrangeRules\Truck.h">
+      <Filter>Source\StrangeRules</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\StrangeRules\VehiclePawn.cpp">
+      <Filter>Source\StrangeRules</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\StrangeRules\VehiclePawn.h">
+      <Filter>Source\StrangeRules</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

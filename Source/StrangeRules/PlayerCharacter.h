@@ -65,7 +65,7 @@ private:
 
     //! Player Max Stamina
     UPROPERTY(VisibleAnywhere, Category = "APlayerCharacter::DebugPlayerProperties", meta = (AllowPrivateAccess = "true"))
-    float PlayerMaxStamina = 1000.0f;
+    float PlayerMaxStamina = 100000.0f;
 
     //! Player Min Stamina
     const float PlayerMinStamina = -150.0f;

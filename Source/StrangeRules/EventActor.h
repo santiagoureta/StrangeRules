@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "LevelChunk.h"
+#include "VehiclePawn.h"
 #include "EventActor.generated.h"
 
 struct ChunkObject
@@ -53,7 +54,7 @@ public:
     bool GenerateInitialLevel();
 
     UFUNCTION(BlueprintCallable, Category = "LevelGeneration")
-    void GenerateDrivingLevel();
+    void CheckTruckPosition();
 
 protected:
 
@@ -66,6 +67,17 @@ private:
 
     UPROPERTY(EditAnywhere, Category = "Setup")
     TSubclassOf<ALevelChunk> BlueprintClass;
+
+    UPROPERTY(EditAnywhere, Category = "Setup")
+    TSubclassOf<ALevelChunk> BlueprintMiddleClass;
+
+    UPROPERTY(EditAnywhere, Category = "Setup")
+    TSubclassOf<ALevelChunk> BlueprintEndClass;
+
+    UPROPERTY(EditAnywhere, Category = "Setup")
+    TSubclassOf<AVehiclePawn> BlueprintTruckClass;
+
+    AVehiclePawn* mVehicleSpawned;
 
     TMap<LevelChunkPosition, ALevelChunk*> mLevelStructMap;
 };

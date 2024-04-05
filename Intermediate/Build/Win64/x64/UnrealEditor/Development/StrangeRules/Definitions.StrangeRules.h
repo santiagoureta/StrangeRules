@@ -1,4 +1,4 @@
-#include "C:/Repos/StrangeRulesDemo/StrangeRules/Intermediate/Build/Win64/x64/StrangeRulesEditor/Development/Engine/SharedDefinitions.Engine.Cpp17.InclOrderUnreal5_0.h"
+#include "C:/Repos/StrangeRulesDemo/StrangeRules/Intermediate/Build/Win64/x64/StrangeRulesEditor/Development/UnrealEd/SharedDefinitions.UnrealEd.Cpp17.InclOrderUnreal5_0.h"
 #undef UE_IS_ENGINE_MODULE
 #undef DEPRECATED_FORGAME
 #define DEPRECATED_FORGAME DEPRECATED
@@ -21,4 +21,8 @@
 #define IMPLEMENT_SIGNING_KEY_REGISTRATION() 
 #define DEPRECATED_FORGAME DEPRECATED
 #define UE_DEPRECATED_FORGAME UE_DEPRECATED
+#define CHAOSVEHICLES_API DLLIMPORT
+#define ANIMGRAPHRUNTIME_API DLLIMPORT
+#define CHAOSVEHICLESCORE_API DLLIMPORT
+#define CHAOSVEHICLESENGINE_API DLLIMPORT
 #define STRANGERULES_API DLLEXPORT

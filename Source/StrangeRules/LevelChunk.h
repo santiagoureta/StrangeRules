@@ -41,18 +41,19 @@ class STRANGERULES_API ALevelChunk : public ALevelInstance
 
         LevelChunkPosition GetLevelPositionType() { return ChunkPositionType; };
 
-        bool GetIsPlayerOn() { return IsPlayerOn; };
+        void SetLevelChunkType(LevelChunkType newVal) { ChunkType = newVal; };
+
+        void SetLevelPositionType(LevelChunkPosition newVal) { ChunkPositionType = newVal; };
+
+        bool GetIsCarOnPositionToReplicateNewPath() { return IsCarOnPositionToReplicateNewPath; };
 
     protected:
 
         UPROPERTY(EditAnywhere, Category = "Setup")
-        class UBoxComponent* CollisionBox;
+        class UBoxComponent* StartRenderingBox;
 
         UPROPERTY(EditAnywhere, Category = "Setup")
-        TSubclassOf<APlayerCharacter> PlayerClass;
-
-        UPROPERTY(EditAnywhere, Category = "Setup")
-        bool IsPlayerOn = false;
+        bool IsCarOnPositionToReplicateNewPath = false;
 
         UPROPERTY(EditAnywhere, Category = "Setup")
         LevelChunkType ChunkType = LevelChunkType::INVALID_CHUNK_TYPE;
@@ -61,10 +62,10 @@ class STRANGERULES_API ALevelChunk : public ALevelInstance
         LevelChunkPosition ChunkPositionType = LevelChunkPosition::INVALID_POSITION_TYPE;
 
         UFUNCTION()
-        void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+        void OnBeginGeneratingMap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
         UFUNCTION()
-        void OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+        void OnEndGeneratingMap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
-        void SetIsPlayerOn(bool newValue) { IsPlayerOn = newValue; };
+        void SetIsCarOnPositionToReplicateNewPath(bool newValue) { IsCarOnPositionToReplicateNewPath = newValue; };
 };
