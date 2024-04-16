@@ -4,27 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "LevelInstance/LevelInstanceActor.h"
-#include "PlayerCharacter.h"
+#include "LevelGenerator.h"
 #include "LevelChunk.generated.h"
 
-UENUM()
-enum class LevelChunkType : int8
+UENUM(BlueprintType)
+enum class LevelChunkType : uint8
 {
-    INVALID_CHUNK_TYPE = -1,
+    INVALID_CHUNK_TYPE UMETA(DisplayName = "INVALID_CHUNK_TYPE"),
     SPAWN_ROAD_STRAIT UMETA(DisplayName = "ROAD_STRAIGHT"),
     SPAWN_ROAD_LEFT UMETA(DisplayName = "ROAD_LEFT"),
     SPAWN_ROAD_RIGHT UMETA(DisplayName = "ROAD_RIGHT")
-};
-
-UENUM()
-enum class LevelChunkPosition : int8
-{
-    INVALID_POSITION_TYPE = -1,
-    FRONT_START_POSITION  UMETA(DisplayName = "FRONT_POSITION"),
-    FRONT_POSITION = FRONT_START_POSITION,
-    MIDDLE_POSITION UMETA(DisplayName = "MIDDLE_POSITION"),
-    BACK_POSITION UMETA(DisplayName = "BACK_POSITION"),
-    FRONT_END_POSITION = BACK_POSITION
 };
 
 UCLASS()
@@ -47,10 +36,15 @@ class STRANGERULES_API ALevelChunk : public ALevelInstance
 
         bool GetIsCarOnPositionToReplicateNewPath() { return IsCarOnPositionToReplicateNewPath; };
 
+        class USplineComponent* GetSplineComponent() { return splineComp; };
+
     protected:
 
         UPROPERTY(EditAnywhere, Category = "Setup")
         class UBoxComponent* StartRenderingBox;
+
+        UPROPERTY(EditAnywhere, Category = "Setup")
+        class USplineComponent* splineComp;
 
         UPROPERTY(EditAnywhere, Category = "Setup")
         bool IsCarOnPositionToReplicateNewPath = false;

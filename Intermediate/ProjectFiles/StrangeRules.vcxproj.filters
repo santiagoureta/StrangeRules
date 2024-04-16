@@ -78,6 +78,18 @@
     <ClInclude Include="..\..\Source\StrangeRules\LevelChunk.h">
       <Filter>Source\StrangeRules</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\StrangeRules\LevelGenerator.cpp">
+      <Filter>Source\StrangeRules</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\StrangeRules\LevelGenerator.h">
+      <Filter>Source\StrangeRules</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\StrangeRules\MainClass.cpp">
+      <Filter>Source\StrangeRules</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\StrangeRules\MainClass.h">
+      <Filter>Source\StrangeRules</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\StrangeRules\PlayerCharacter.cpp">
       <Filter>Source\StrangeRules</Filter>
     </ClCompile>
@@ -97,12 +109,6 @@
       <Filter>Source\StrangeRules</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\StrangeRules\StrangeRulesGameModeBase.h">
-      <Filter>Source\StrangeRules</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\Source\StrangeRules\Truck.cpp">
-      <Filter>Source\StrangeRules</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\StrangeRules\Truck.h">
       <Filter>Source\StrangeRules</Filter>
     </ClInclude>
     <ClCompile Include="..\..\Source\StrangeRules\VehiclePawn.cpp">

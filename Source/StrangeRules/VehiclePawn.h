@@ -13,6 +13,8 @@ class STRANGERULES_API AVehiclePawn : public AWheeledVehiclePawn
 
 public:
 
+    AVehiclePawn();
+
     void SetRoadSpline(USplineComponent* roadSpline) {mRoadSplineRef = roadSpline;};
 
     UFUNCTION(BlueprintCallable, Category = "RoadInformation")
@@ -20,4 +22,24 @@ public:
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     class USplineComponent* mRoadSplineRef;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
+    float mTrottleValue = 0.5f;
+
+    // Start the engine at the start of the game or when we need to start again
+    void StartDriving();
+
+    //! Get the flag to know if we are driving
+    bool GetIsDriving() { return mIsDriving; };
+
+private:
+
+    //! flag to know if we are driving
+    bool mIsDriving = false;
+
+    //! vehicle movement component
+    UChaosVehicleMovementComponent* mChaosMovementComp;
+
+    //! Function that sets the flag for the vehicle
+    void SetIsDriving(bool newValue) { mIsDriving = newValue; };
 };
